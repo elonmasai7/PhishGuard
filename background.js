@@ -45,3 +45,17 @@ chrome.webRequest.onBeforeRequest.addListener(
   { urls: ["<all_urls>"] },
   ["blocking"]
 );
+// Background message handler
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.type === 'reportPhishing') {
+      chrome.storage.local.get(['blockedUrls', 'threatsBlocked'], (result) => {
+        const blockedUrls = new Set(result.blockedUrls || []);
+        blockedUrls.add(new URL(request.url).hostname);
+        
+        chrome.storage.local.set({
+          blockedUrls: Array.from(blockedUrls),
+          threatsBlocked: (result.threatsBlocked || 0) + 1
+        });
+      });
+    }
+  });

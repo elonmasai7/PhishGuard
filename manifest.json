@@ -3,15 +3,20 @@
     "name": "PhishGuard",
     "version": "1.0",
     "description": "Real-time phishing detection with AI-powered alerts",
-    "permissions": ["tabs", "storage", "webRequest"],
+    "permissions": [
+      "tabs",
+      "storage",
+      "webRequest",
+      "webRequestBlocking"
+    ],
     "host_permissions": ["<all_urls>"],
     "background": {
       "service_worker": "background.js"
     },
     "content_scripts": [{
       "matches": ["<all_urls>"],
-      "js": ["contentScript.js"], 
-      "run_at": "document_end" 
+      "js": ["contentScript.js"],
+      "run_at": "document_end"
     }],
     "action": {
       "default_popup": "popup.html",

@@ -2,15 +2,222 @@
 <html>
 <head>
   <title>PhishGuard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    body { width: 250px; padding: 15px; font-family: Arial; }
-    button { padding: 8px; margin-top: 10px; }
+    :root {
+      --primary-blue: #2B6CB0;
+      --accent-red: #E53E3E;
+      --dark-gray: #2D3748;
+      --light-gray: #F7FAFC;
+      --background: #FFFFFF;
+      --text-primary: #1A202C;
+      --card-bg: #FFFFFF;
+    }
+
+    [data-theme="dark"] {
+      --background: #1A202C;
+      --text-primary: #F7FAFC;
+      --card-bg: #2D3748;
+      --light-gray: #4A5568;
+    }
+
+    body {
+      width: 320px;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--background);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary-blue), #4299E1);
+      padding: 1.5rem;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .logo-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .content {
+      padding: 1.5rem;
+    }
+
+    .status-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    #status {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .status-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      background: var(--accent-red);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(229, 62, 62, 0.3);
+    }
+
+    button::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .stat-item {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
+      color: var(--primary-blue);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes shine {
+      0% { left: -50%; }
+      100% { left: 150%; }
+    }
   </style>
 </head>
 <body>
-  <h2>🛡️ PhishGuard</h2>
-  <p>Current status: <span id="status">Safe</span></p>
-  <button id="reportBtn">Report Phishing</button>
+  <div class="header">
+    <button class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+    </button>
+    <div class="logo-container">
+      <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        <circle cx="12" cy="12" r="3" fill="currentColor"/>
+      </svg>
+    </div>
+    <h1 style="margin: 0; font-weight: 600; letter-spacing: 1px;">PHISHGUARD</h1>
+  </div>
+
+  <div class="content">
+    <div class="status-card">
+      <div id="status">
+        <svg class="status-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <div>
+          <p style="margin: 0 0 0.25rem; color: var(--text-primary);">System Status</p>
+          <p style="margin: 0; font-size: 1.2rem; color: #38A169;">All Systems Secure</p>
+        </div>
+      </div>
+    </div>
+
+    <button id="reportBtn">
+      <i class="fas fa-shield-alt"></i>
+      Report Phishing Attempt
+    </button>
+
+    <div class="stats">
+      <div class="stat-item">
+        <i class="fas fa-shield-alt"></i>
+        <div class="stat-value" id="blockedCount">0</div>
+        <p>Threats Blocked</p>
+      </div>
+      <div class="stat-item">
+        <i class="fas fa-bullseye"></i>
+        <div class="stat-value" id="accuracy">98%</div>
+        <p>Detection Rate</p>
+      </div>
+    </div>
+  </div>
+
   <script src="popup.js"></script>
 </body>
 </html>
