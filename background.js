@@ -2,7 +2,7 @@ let unsafeUrls = new Set();
 
 // Check URL against Google Safe Browsing API
 async function checkUrl(url) {
-  const API_KEY = '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'; // Replace with your API key
+  const API_KEY = ''; // Replace with your API key
   const apiUrl = `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${API_KEY}`;
 
   const requestBody = {
