@@ -104,9 +104,6 @@ phishguard/
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
 
-## 📄 License
-Distributed under MIT License. See `LICENSE` for details.
-
 ## 🙏 Acknowledgments
 - FSC Supporting Women in Computing
 - Google Developer Student Club
